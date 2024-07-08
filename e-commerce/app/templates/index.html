@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Simple E-commerce</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('index') }}">Products</a></li>
+                <li><a href="#">Cart</a></li>
+                <li><a href="{{ url_for('checkout') }}">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Products</h2>
+        <div class="products">
+            {% for product in products %}
+                <div class="product">
+                    <img src="https://unsplash.com/photos/man-wearing-white-crew-neck-t-shirts-WWesmHEgXDs" alt="White T-shirt">
+                    <h3>T-Shirt</h3>
+                    <p>A white t-shirt, unisex</p>
+                    <p><strong>Price:</strong> $30</p>
+                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn">View Product</a>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Simple E-commerce. All rights reserved.</p>
+    </footer>
+</body>
+</html>

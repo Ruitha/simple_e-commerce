@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success - Simple E-commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Simple E-commerce</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="product_detail.html">Products</a></li>
+                <li><a href="#">Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="payment-success">
+            <h2>Payment Successful!</h2>
+            <p>Thank you for your purchase. Your payment has been processed successfully.</p>
+            <a href="/" class="btn">Return to Home</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Simple E-commerce. All rights reserved.</p>
+    </footer>
+</body>
+</html>

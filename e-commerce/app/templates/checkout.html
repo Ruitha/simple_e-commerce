@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.0/build/intasend-inline.js"></script>
+    
+</head>
+<body>
+    <header>
+        <h1>Simple E-commerce</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('index') }}">Products</a></li> 
+                <li><a href="#">Cart</a></li> 
+                <li><a href="{{ url_for('checkout') }}">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Checkout</h2>
+        <form action="{{ url_for('checkout') }}" method="POST">
+        <!-- IntaSend payment button will go here -->
+    </form>
+    <div><button class="intaSendPayButton" data-currency="KES" data-amount="30" data-country="KE">Pay Now</button></div>
+
+    <script>
+
+        new window.IntaSend({
+        publicAPIKey: "ISPubKey_test_e767a17c-5afd-4a1b-8754-9415379df6b6",
+        live: false //set to true when going live
+        })
+        .on("COMPLETE", (results) => {console.log("Do something on success", results)})
+        .on("FAILED", (results) => {console.log("Do something on failure", results)})
+        .on("IN-PROGRESS", (results) => {console.log("Payment in progress status", results)})
+      
+      </script>
+</body>
+</html>
