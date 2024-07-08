@@ -1,25 +1,27 @@
 import requests #type: ignore
 import logging, os, sys
-#import os
-#import sys
-print("Current working directory:", os.getcwd())
-print("Python path:", sys.path)
-
-# Set up logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 from venv import create
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from model import db, Product, Order #type: ignore
 from intasend import APIService # type: ignore
+from flask_sqlalchemy import SQLAlchemy
 
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+print("Current working directory:", os.getcwd())
+print("Python path:", sys.path)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# db= SQLAlchemy(app)
 db.init_app(app)
+
 
 # Creating tables in the Database(Database initialization)
 def create_db():
@@ -30,22 +32,20 @@ def create_db():
 
 @app.route('/')
 def index():
+
     products = Product.query.all()
     return render_template('index.html', products=products)
 
 @app.route('/product/<int:product_id>')
 def product_detail(product_id):
-    # product = Product.query.get_or_404(product_id)
-    if request.method == 'POST':
-        print(request.__dict__)
-    # return render_template('product_detail.html', product=product)
-    return render_template('product_detail.html', product=None)
+    product = Product.query.get_or_404(product_id)
+    return render_template('product_detail.html', product=product)
 
 @app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     if request.method == 'POST':
         # print(request.form) # Print form data for debugging
-        print(request.form.get('amount'))
+        print(request.form)
         
 
         token = "ISSecretKey_test_741c37a4-faa4-4b7b-ae0d-53e8fdea483f"
@@ -87,4 +87,4 @@ if __name__ == '__main__':
     create_db()
     app.debug = True
     app.run()
-    
+

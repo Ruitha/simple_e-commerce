@@ -9,12 +9,11 @@
 </head>
 <body>
     <header>
-        <h1>Simple E-commerce</h1>
+        <h1><a href="{{ url_for('index') }}">Simple E-Commerce</a></h1>
         <nav>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="product_detail.html">Products</a></li>
-                <li><a href="#">Cart</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <!-- <li><a href="{{ url_for('product_detail', product_id=product.id) }}">Products</a></li> -->
                 <li><a href="checkout.html">Checkout</a></li>
             </ul>
         </nav>

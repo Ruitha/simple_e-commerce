@@ -16,3 +16,7 @@ class Order(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     product = db.relationship('Product', backref=db.backref('orders', lazy=True))
     payment_status = db.Column(db.String(50), nullable=False, default='pending')
+
+
+
+
