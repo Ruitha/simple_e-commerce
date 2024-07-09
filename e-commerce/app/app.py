@@ -7,6 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 from model import db, Product, Order #type: ignore
 from intasend import APIService # type: ignore
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -16,7 +19,7 @@ print("Current working directory:", os.getcwd())
 print("Python path:", sys.path)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # db= SQLAlchemy(app)
@@ -44,12 +47,13 @@ def product_detail(product_id):
 @app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     if request.method == 'POST':
-        # print(request.form) # Print form data for debugging
+        # Print form data for debugging
+        # print(request.form)
         print(request.form)
         
 
-        token = "ISSecretKey_test_741c37a4-faa4-4b7b-ae0d-53e8fdea483f"
-        publishable_key = "ISPubKey_test_e767a17c-5afd-4a1b-8754-9415379df6b6"
+        token = os.getenv('IS_SECRET_KEY')
+        publishable_key = os.getenv('IS_PUBLISHABLE_KEY')
         service = APIService(token=token, publishable_key=publishable_key, test=True)
 
         payment_details = {
@@ -60,7 +64,7 @@ def checkout():
         }
 
         try:
-            response = service.collect.checkout(amount= float(request.form['amount']),
+            response = service.collect.checkout(amount= float(request.form['amount'], redirect_url=""),#add a redirect url of your choice
             currency= request.form['currency'],
             email=request.form['customer_email'],**payment_details)
             logger.debug(f"Payment response: {response}")
